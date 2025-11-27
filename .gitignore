@@ -56,3 +56,4 @@ docker-compose.override.yml
 # allow customizing: uncomment and adjust as needed
 # !/logs/keep-me.log
 
+/filebeat/

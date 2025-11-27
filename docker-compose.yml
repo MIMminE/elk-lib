@@ -5,7 +5,7 @@ services:
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - ELASTIC_PASSWORD=password
     ports:
       - "9200:9200"
     volumes:
@@ -19,6 +19,11 @@ services:
       - ./logs:/logs
     ports:
       - "5000:5000"
+    depends_on:
+      - elasticsearch
+    environment:
+      - LS_JAVA_OPTS=-Xms256m -Xmx256m
+    command: ["-f","/usr/share/logstash/pipeline","--log.level","debug"]
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.12.0
