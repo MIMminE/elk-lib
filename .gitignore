@@ -1,0 +1,58 @@
+# Top-level .gitignore for this repo (Java + Gradle + common OS/IDE files)
+
+# Build output
+/build/
+/target/
+/out/
+
+# Gradle
+.gradle/
+.gradle-local/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Maven/IDE artifacts
+/*.iml
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA
+/.idea/
+*.iml
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Logs
+/logs/
+*.log
+
+# Spring Boot
+spring.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment
+.env
+
+# VS Code
+.vscode/
+
+# Docker
+docker-compose.override.yml
+
+# temporary files
+*.tmp
+*.swp
+*~
+
+# allow customizing: uncomment and adjust as needed
+# !/logs/keep-me.log
+
