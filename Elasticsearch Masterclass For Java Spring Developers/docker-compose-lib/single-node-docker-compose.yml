@@ -1,0 +1,24 @@
+name: elasticsearch-kibana-docker-compose
+version: '3.8'
+services:
+  elastic:
+    container_name: elastic-service
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      # 엘라스틱 서치의 인증/인가, API 키, 사용자 룰 등 보안 기능 전체를 끄는 설정이다.
+      # 8.x 버전부터 기본적으로 보안 기능이 활성화되어 있기 때문에, 단일 노드 개발 환경에서 보안을 비활성화하려면 이 설정이 필요하다.
+      - xpack.security.http.ssl.enabled=false
+      # HTTP 통신에서 SSL/TLS 암호화를 비활성화하는 설정이다.
+      # 단일 노드 개발 환경에서 SSL을 사용하지 않으려면 이 설정이 필요하다.
+
+  kibana:
+    container_name: kibana-service
+    image: docker.elastic.co/kibana/kibana:8.12.0
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: http://elastic:9200

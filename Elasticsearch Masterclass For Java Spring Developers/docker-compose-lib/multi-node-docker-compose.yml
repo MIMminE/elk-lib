@@ -1,0 +1,52 @@
+name: multi-node-elasticsearch-docker-compose
+version: '3.8'
+services:
+  es-node1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    container_name: es-node1
+    environment:
+      - node.name=es-node1  # 노드의 고유 식별자
+      - cluster.name=es-cluster  # 노드가 속할 클러스터 이름
+      - discovery.seed_hosts=es-node2,es-node3   # 클러스터 내 다른 노드들의 호스트명
+      - cluster.initial_master_nodes=es-node1,es-node2,es-node3  # 초기 마스터 노드 목록
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9201:9200"
+  es-node2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    container_name: es-node2
+    environment:
+      - node.name=es-node2  # 노드의 고유 식별자
+      - cluster.name=es-cluster  # 노드가 속할 클러스터 이름
+      - discovery.seed_hosts=es-node1,es-node3   # 클러스터 내 다른 노드들의 호스트명
+      - cluster.initial_master_nodes=es-node1,es-node2,es-node3  # 초기 마스터 노드 목록
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9202:9200"
+
+
+  es-node3:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    container_name: es-node3
+    environment:
+      - node.name=es-node3  # 노드의 고유 식별자
+      - cluster.name=es-cluster  # 노드가 속할 클러스터 이름
+      - discovery.seed_hosts=es-node1,es-node2   # 클러스터 내 다른 노드들의 호스트명
+      - cluster.initial_master_nodes=es-node1,es-node2,es-node3  # 초기 마스터 노드 목록
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9203:9200"
+
+  kibana:
+    container_name: kibana-service
+    image: docker.elastic.co/kibana/kibana:8.12.0
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS = ["http://es-node1:9200","http://es-node2:9200","http://es-node3:9200"]
