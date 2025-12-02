@@ -1,6 +1,8 @@
 package nuts.study.elk.esapitest.sec01;
 
 import nuts.study.elk.esapitest.AbstractTest;
+import nuts.study.elk.esapitest.sec01.entity.Customer;
+import nuts.study.elk.esapitest.sec01.entity.Review;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -24,6 +26,19 @@ public class IndexOperationsTest extends AbstractTest {
         this.verify(indexOperations, 1, 1);
     }
 
+    @Test
+    public void createIndexWithSettings() {
+        var indexOperations = this.elasticsearchOperations.indexOps(Review.class);
+        Assertions.assertTrue(indexOperations.create());
+        this.verify(indexOperations, 2, 2);
+    }
+
+    @Test
+    public void createIndexWithSettingsAndMappings() {
+        var indexOperations = this.elasticsearchOperations.indexOps(Customer.class);
+        Assertions.assertTrue(indexOperations.createWithMapping());
+        this.verify(indexOperations, 3, 0);
+    }
 
     private void verify(IndexOperations indexOperations, int expectedShards, int expectedReplicas) {
         var settings = indexOperations.getSettings();

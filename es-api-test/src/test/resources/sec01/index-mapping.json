@@ -1,0 +1,6 @@
+{
+  "properties": {
+    "name": { "type" :  "text"  },
+    "age":  { "type" :  "integer" }
+  }
+}

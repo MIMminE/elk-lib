@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 
 @SpringBootTest
 @Import(TestcontainersConfiguration.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AbstractTest {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractTest.class);
