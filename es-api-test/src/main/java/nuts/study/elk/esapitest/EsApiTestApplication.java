@@ -1,13 +1,13 @@
-package nuts.study.elk.elasticsearchapitest;
+package nuts.study.elk.esapitest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ElasticSearchApiTestApplication {
+public class EsApiTestApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ElasticSearchApiTestApplication.class, args);
+        SpringApplication.run(EsApiTestApplication.class, args);
     }
 
 }
